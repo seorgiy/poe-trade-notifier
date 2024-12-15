@@ -10,4 +10,6 @@ POE/POE2 telegram whispering notificator
 
 ## How it works
 Application constantly observes log file with all chat messages. If there is Whisper message, it instantly forwards it to Telegram.
-There is no any types of injections, so it's not violating any POE rules what so ever
+There is no any types of injections, so it's not violating any POE rules what so ever.
+
+Windows may not like unknown .exe file, it's expected behavior, you still can run it by pressing «Run anyway» or something like that. Also any antivirus apps will not be happy i suppose.
