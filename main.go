@@ -23,18 +23,17 @@ var dateRegexp = regexp.MustCompile(`\d{4}\/\d{1,2}\/\d{1,2}\s\d{2}:\d{2}:\d{2}`
 func init() {
 	viper.SetConfigName("config")
 	viper.SetConfigType("json")
-	// viper.SetDefault("chat_id", 0)
 	viper.AddConfigPath(".")
 }
 
 func main() {
 	if err := viper.ReadInConfig(); err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-			fmt.Printf("Config is not found, writing")
 			viper.WriteConfigAs("config.json")
 			viper.ReadInConfig()
 		} else {
-			// Config file was found but another error was produced
+			dialog.Message("%s", err).Title("Something is wrong").Error()
+			os.Exit(0)
 		}
 	}
 
