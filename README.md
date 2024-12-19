@@ -1,6 +1,6 @@
 
 ## Description
-Path of Exile II telegram whispering notifier
+Path of Exile II telegram whispering notifier for trade.
 
 ## How to use
 1. [Download](https://github.com/seorgiy/poe-trade-notifier/releases) last release, unzip somewhere and run poe-trade-notifier.exe, follow the instructions
