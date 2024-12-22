@@ -17,7 +17,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-var whisperRegexp = regexp.MustCompile(`] (@.+?:.*)`)
+var whisperRegexp = regexp.MustCompile(`] (@From.+?:.*)`)
 var dateRegexp = regexp.MustCompile(`\d{4}\/\d{1,2}\/\d{1,2}\s\d{2}:\d{2}:\d{2}`)
 
 func init() {
