@@ -17,4 +17,4 @@ Windows may not like unknown .exe file, it's expected behavior, you still can ru
 
 
 ## Need help?
-Please feel free to reach out to [me](https://t.me/seorgiy)
+Please feel free to reach out to [me](https://t.me/seorgiy) or create an [issue](https://github.com/seorgiy/poe-trade-notifier/issues)
