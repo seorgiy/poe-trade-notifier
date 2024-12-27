@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
@@ -17,7 +18,6 @@ import (
 	"github.com/spf13/viper"
 )
 
-var whisperRegexp = regexp.MustCompile(`] (@From.+?:.*)`)
 var dateRegexp = regexp.MustCompile(`\d{4}\/\d{1,2}\/\d{1,2}\s\d{2}:\d{2}:\d{2}`)
 
 func init() {
@@ -36,6 +36,24 @@ func main() {
 			os.Exit(0)
 		}
 	}
+
+	locale := getLocale()
+	fmt.Printf("Locale is %s\n", locale)
+	whisperStartings := map[string]string{
+		"ru":    "От кого",
+		"en":    "From",
+		"de":    "Von",
+		"fr":    "De",
+		"pt-Br": "De",
+		"es":    "De",
+	}
+
+	if whisperStartings[locale] == "" {
+		dialog.Message("%s", "Your locale is not supported yet, please create an issue here https://github.com/seorgiy/poe-trade-notifier").Title("Something is wrong").Error()
+		os.Exit(0)
+	}
+	regexString := strings.Replace("] (@From.+?:.*)", "From", whisperStartings[locale], 1)
+	whisperRegexp := regexp.MustCompile(regexString)
 
 	logFilePath := getLogFile()
 	fmt.Printf("Logs path is %s\n", logFilePath)
@@ -148,6 +166,38 @@ func getUserTelegramId() int64 {
 	}
 
 	return id
+}
+
+func getLocale() string {
+	userHomeDir, err := os.UserHomeDir()
+	if err != nil {
+		dialog.Message("%s", err).Title("Can't find the config file").Error()
+		os.Exit(0)
+	}
+	poeConfigDir := filepath.Join(userHomeDir, "Documents", "My Games", "Path of Exile 2", "poe2_production_Config.ini")
+
+	poeConfigFile, err := os.Open(poeConfigDir)
+	if err != nil {
+		dialog.Message("%s", err).Title("Can't find the config file").Error()
+		os.Exit(0)
+	}
+
+	scanner := bufio.NewScanner(poeConfigFile)
+	locale := ""
+	line := 0
+	for scanner.Scan() {
+		if strings.HasPrefix(scanner.Text(), "language=") {
+			locale = strings.Replace(scanner.Text(), "language=", "", 1)
+			return locale
+		}
+		line++
+	}
+
+	if locale == "" {
+		dialog.Message("%s", err).Title("Can't find the config file").Error()
+		os.Exit(0)
+	}
+	return locale
 }
 
 func getTime(regexp regexp.Regexp, rawString string) (time.Time, error) {
