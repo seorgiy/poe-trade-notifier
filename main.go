@@ -188,6 +188,7 @@ func getLocale() string {
 	for scanner.Scan() {
 		if strings.HasPrefix(scanner.Text(), "language=") {
 			locale = strings.Replace(scanner.Text(), "language=", "", 1)
+			poeConfigFile.Close()
 			return locale
 		}
 		line++
@@ -197,6 +198,7 @@ func getLocale() string {
 		dialog.Message("%s", err).Title("Can't find the config file").Error()
 		os.Exit(0)
 	}
+	poeConfigFile.Close()
 	return locale
 }
 
