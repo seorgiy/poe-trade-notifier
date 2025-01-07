@@ -5,12 +5,13 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"io/ioutil"
 	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
 	"time"
-
+	"github.com/adrg/xdg"
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/sqweek/dialog"
 
@@ -169,12 +170,7 @@ func getUserTelegramId() int64 {
 }
 
 func getLocale() string {
-	userHomeDir, err := os.UserHomeDir()
-	if err != nil {
-		dialog.Message("%s", err).Title("Can't find the config file").Error()
-		os.Exit(0)
-	}
-	poeConfigDir := filepath.Join(userHomeDir, "Documents", "My Games", "Path of Exile 2", "poe2_production_Config.ini")
+	poeConfigDir := filepath.Join(xdg.UserDirs.Documents, "My Games", "Path of Exile 2", "poe2_production_Config.ini")
 
 	poeConfigFile, err := os.Open(poeConfigDir)
 	if err != nil {
@@ -195,8 +191,8 @@ func getLocale() string {
 	}
 
 	if locale == "" {
-		dialog.Message("%s", err).Title("Can't find the config file").Error()
-		os.Exit(0)
+		fmt.Printf("Language is not found in the game's config. Assuming it is english\n")
+		locale = "en"
 	}
 	poeConfigFile.Close()
 	return locale
