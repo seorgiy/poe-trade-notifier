@@ -179,14 +179,12 @@ func getLocale() string {
 
 	scanner := bufio.NewScanner(poeConfigFile)
 	locale := ""
-	line := 0
 	for scanner.Scan() {
 		if strings.HasPrefix(scanner.Text(), "language=") {
 			locale = strings.Replace(scanner.Text(), "language=", "", 1)
 			poeConfigFile.Close()
 			return locale
 		}
-		line++
 	}
 
 	if locale == "" {
