@@ -15,6 +15,8 @@ There is no any types of injections, so it's not violating any POE rules what so
 
 Windows may not like unknown .exe file, it's expected behavior, you still can run it by pressing «Run anyway» or something like that. Also any antivirus apps will not be happy i suppose.
 
+## Known issues
+Koreans messages not being logged in Client.txt so they also will not be processed by poe-trade-notifier. [more details](https://www.reddit.com/r/pathofexile/comments/c6yijd/bug_important_korean_whispers_not_being_logged_in/)
 
 ## Need help?
 Please feel free to reach out to [me](https://t.me/seorgiy) or create an [issue](https://github.com/seorgiy/poe-trade-notifier/issues)
